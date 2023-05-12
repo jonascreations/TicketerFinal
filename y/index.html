@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/9.21.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/9.21.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-functions-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    
+  </head>
+  <style>
+
+#signOut{
+  display: none;
+}
+
+#changePassBtn{
+  display: none;
+}
+
+#register {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: rgb(3, 158, 210);
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+}
+#login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: rgb(3, 158, 210);
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+}
+
+#createTicket {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: rgb(3, 158, 210);
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+}
+
+#changePass{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: rgb(3, 158, 210);
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+}
+
+
+#updateTicket {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: rgb(3, 158, 210);
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 20px;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #0047AB;
+  border-radius: 0;
+  outline: none;
+  font-size: 16px;
+  color: #555;
+}
+
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #0047AB;
+  border-radius: 0;
+  outline: none;
+  font-size: 16px;
+  color: #555;
+}
+
+button {
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border: 2px solid #0047AB;
+  border-radius: 5px;
+  background-color: white;
+  color: #1E88E5;
+  font-weight: bold;
+  cursor: pointer;
+}
+/*so people cant select things not in the modal*/
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5); /* White with opacity */
+  z-index: 0;
+}
+td {
+  height: 50px;
+  padding: 10px;
+  text-align: center;
+}
+select{
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 40px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+  }
+  .table-row {
+    border: 1px solid #ccc;
+  }
+  label {
+  font-size: 1.2em; /* Adjust the value to make it slightly bigger */
+  font-weight: bold;
+}
+  </style>
+  <body>
+    <div id="message">
+      
+      
+      <h1 style="background-color: rgb(3, 158, 210); margin-top: 5px; margin-bottom: 5px; padding: 14px; border-top: 2px solid black; border-bottom: 2px solid black;">Ticketer</h1>
+
+
+
+
+
+
+
+<!--logout-->
+<button onclick="signOutAndRefresh()" id="signOut">Sign Out</button>
+<button onclick="toggleChangePassDisplay()" id="changePassBtn">ChangePass</button>
+<div id="changePass">
+  <p>password must be 6 chars long</p>
+  <form id="changePasswordForm">
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" required><br><br>
+    <button type="button" id="changePasswordBtn" onclick="toggleChangePassDisplay()">Change Password</button>
+  </form>
+  
+</div>
+<!--table-->
+<h3 style="background-color: rgb(3, 158, 210); margin-top: 5px; margin-bottom: 5px; padding: 14px; border-top: 2px solid black; border-bottom: 2px solid black;">Table</h3>
+      <p>Click on a ticket to view/update/delete it if you have permission.</p>
+      <div id="app">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Creator Name</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Worker Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="ticket in filteredTickets" :key="ticket.id" @click="selectTicket(ticket)">
+            <td>{{ ticket.title }}</td>
+            <td>{{ ticket.creatorName }}</td>
+            <td>{{ ticket.description }}</td>
+            <td>{{ ticket.priority }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>{{ ticket.workerEmail }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="toggleDeleted">Toggle History</button>
+      <button @click="getAndSetTickets">Refresh</button>
+      <button @click="createTicketsBtn">Create Ticket</button>
+
+      <!--updateTicket-->
+      <div id = "updateTicket" v-if="selectedTicket">
+        <h1>Update</h1>
+        <form @submit.prevent="updateTicket">
+          <label>Title:</label>
+          <input type="text" v-model="ticketCopy.title" v-if="isAllowedToView()">
+          <p v-if="!isAllowedToView()">{{ ticketCopy.title }}</p>
+          <br>
+      
+          <label>Description:</label>
+          <input type="text" v-model="ticketCopy.description" v-if="isAllowedToView()">
+          <p v-if="!isAllowedToView()">{{ ticketCopy.description }}</p>
+          <br>
+      
+          <label>Priority:</label>
+          <select v-model="ticketCopy.priority" v-if="isAllowedToView()">
+            <option value="1">Lowest</option>
+            <option value="2">Low</option>
+            <option value="3">Medium</option>
+            <option value="4">High</option>
+            <option value="5">Highest</option>
+          </select>
+          <p v-if="!isAllowedToView()">{{ ticketCopy.priority }}</p>
+          <br>
+      
+          <label>Status:</label>
+          <input type="text" v-model="ticketCopy.status" >
+          <br>
+      
+          <button type="submit">Update</button>
+          <button @click="clickDelete" v-if="isAllowedToView()">Delete</button>
+          <button @click="closeForm">Close</button>
+        </form>
+      </div>
+      
+      <!--this will probably be one modal-->
+    </div>
+<!--create ticket-->
+<div id = "createTicket">
+  <form id="create-ticket-form">
+    <h1>Create Ticket</h1>
+    <label for="worker-email">Worker Email:</label>
+    <input id="worker-emails" name="worker-email">
+    <br>
+    
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required>
+    <br>
+    
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    <br>
+    
+    <label for="department">Department:</label>
+    <input type="text" id="department" name="department" required>
+
+    
+    <label for="priority">Priority:</label>
+    <select id="priority" name="priority" required>
+      <option value="1">Lowest</option>
+      <option value="2">Low</option>
+      <option value="3">Medium</option>
+      <option value="4">High</option>
+      <option value="5">Highest</option>
+    </select>
+
+    <br>
+    <button type="submit" onclick="toggleCreateDisplay()">Create Ticket</button>
+    <button type="button" onclick="toggleCreateDisplay()">Close</button>
+  </form>
+  </div>
+      <!--register form-->
+      <div id = "register">
+        <h1 style="display: flex; justify-content: center;">Register</h1>
+        <form id="registerForm">
+          <p>passwords must be 6 chars long</p>
+          <label for="register-email">Email:</label>
+          <input type="email" id="register-email" name="register-email" required><br><br>
+          <label for="register-password">Password:</label>
+          <input type="password" id="register-password" name="register-password" required><br><br>
+          <label for="register-position">Position:</label>
+          <select id="register-position" name="register-position">
+            <option value="manager">Manager</option>
+            <option value="worker">Worker</option>
+          </select><br><br>
+          <button type="submit">Register</button>
+          <button type="button" onclick="switchBetweenLoginAndRegister()">Login</button>
+        </form>
+        </div>
+        <!--login form-->
+        <div id = "login">
+          <h1 style="display: flex; justify-content: center;">Login</h1>
+          <form id="loginForm">
+            <label for="login-email">Email:</label>
+            <input type="email" id="login-email" name="login-email" required><br><br>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="login-password" required><br><br>
+            <button type="submit">login</button>
+            <button type="button" onclick="switchBetweenLoginAndRegister()">Register</button>
+          </form>
+        </div>
+      
+      <!--
+      <button id="createTicketBtn">Create Ticket</button>
+      <button id="returnTicketBtn">Return Ticket</button>
+      <button id="returnTicketBtn2">Return Ticket2</button>
+      <button id="returnTicketBtn3">Return Ticket3</button>
+      <button id="getTicketsBtn">Get User Tickets</button>
+  -->
+      <!-- vue js-->
+      <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+      
+
+      <script src="js/app.js"></script>
+      <script src="js/auth.js"></script>
+      <script src="js/createTicket.js"></script>
+
+      <script src="js/vueScript.js"></script>
+      <script src="js/modal.js"></script>
+
+  </body>
+</html>
